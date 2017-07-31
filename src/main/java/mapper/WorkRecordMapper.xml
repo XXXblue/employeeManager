@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.WorkRecordMapper" >
+  <resultMap id="BaseResultMap" type="po.WorkRecord" >
+    <id column="W_Id" property="wId" jdbcType="BIGINT" />
+    <result column="W_Type" property="wType" jdbcType="INTEGER" />
+    <result column="W_No" property="wNo" jdbcType="BIGINT" />
+    <result column="W_APPROVE" property="wApprove" jdbcType="INTEGER" />
+    <result column="W_DURATION" property="wDuration" jdbcType="INTEGER" />
+    <result column="W_DATE" property="wDate" jdbcType="DATE" />
+    <result column="W_REASON" property="wReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    W_Id, W_Type, W_No, W_APPROVE, W_DURATION, W_DATE, W_REASON
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.WorkRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from work_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from work_record
+    where W_Id = #{wId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from work_record
+    where W_Id = #{wId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.WorkRecordExample" >
+    delete from work_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.WorkRecord" >
+    insert into work_record (W_Id, W_Type, W_No, 
+      W_APPROVE, W_DURATION, W_DATE, 
+      W_REASON)
+    values (#{wId,jdbcType=BIGINT}, #{wType,jdbcType=INTEGER}, #{wNo,jdbcType=BIGINT}, 
+      #{wApprove,jdbcType=INTEGER}, #{wDuration,jdbcType=INTEGER}, #{wDate,jdbcType=DATE}, 
+      #{wReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="po.WorkRecord" >
+    insert into work_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        W_Id,
+      </if>
+      <if test="wType != null" >
+        W_Type,
+      </if>
+      <if test="wNo != null" >
+        W_No,
+      </if>
+      <if test="wApprove != null" >
+        W_APPROVE,
+      </if>
+      <if test="wDuration != null" >
+        W_DURATION,
+      </if>
+      <if test="wDate != null" >
+        W_DATE,
+      </if>
+      <if test="wReason != null" >
+        W_REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        #{wId,jdbcType=BIGINT},
+      </if>
+      <if test="wType != null" >
+        #{wType,jdbcType=INTEGER},
+      </if>
+      <if test="wNo != null" >
+        #{wNo,jdbcType=BIGINT},
+      </if>
+      <if test="wApprove != null" >
+        #{wApprove,jdbcType=INTEGER},
+      </if>
+      <if test="wDuration != null" >
+        #{wDuration,jdbcType=INTEGER},
+      </if>
+      <if test="wDate != null" >
+        #{wDate,jdbcType=DATE},
+      </if>
+      <if test="wReason != null" >
+        #{wReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.WorkRecordExample" resultType="java.lang.Integer" >
+    select count(*) from work_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update work_record
+    <set >
+      <if test="record.wId != null" >
+        W_Id = #{record.wId,jdbcType=BIGINT},
+      </if>
+      <if test="record.wType != null" >
+        W_Type = #{record.wType,jdbcType=INTEGER},
+      </if>
+      <if test="record.wNo != null" >
+        W_No = #{record.wNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.wApprove != null" >
+        W_APPROVE = #{record.wApprove,jdbcType=INTEGER},
+      </if>
+      <if test="record.wDuration != null" >
+        W_DURATION = #{record.wDuration,jdbcType=INTEGER},
+      </if>
+      <if test="record.wDate != null" >
+        W_DATE = #{record.wDate,jdbcType=DATE},
+      </if>
+      <if test="record.wReason != null" >
+        W_REASON = #{record.wReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update work_record
+    set W_Id = #{record.wId,jdbcType=BIGINT},
+      W_Type = #{record.wType,jdbcType=INTEGER},
+      W_No = #{record.wNo,jdbcType=BIGINT},
+      W_APPROVE = #{record.wApprove,jdbcType=INTEGER},
+      W_DURATION = #{record.wDuration,jdbcType=INTEGER},
+      W_DATE = #{record.wDate,jdbcType=DATE},
+      W_REASON = #{record.wReason,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.WorkRecord" >
+    update work_record
+    <set >
+      <if test="wType != null" >
+        W_Type = #{wType,jdbcType=INTEGER},
+      </if>
+      <if test="wNo != null" >
+        W_No = #{wNo,jdbcType=BIGINT},
+      </if>
+      <if test="wApprove != null" >
+        W_APPROVE = #{wApprove,jdbcType=INTEGER},
+      </if>
+      <if test="wDuration != null" >
+        W_DURATION = #{wDuration,jdbcType=INTEGER},
+      </if>
+      <if test="wDate != null" >
+        W_DATE = #{wDate,jdbcType=DATE},
+      </if>
+      <if test="wReason != null" >
+        W_REASON = #{wReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where W_Id = #{wId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.WorkRecord" >
+    update work_record
+    set W_Type = #{wType,jdbcType=INTEGER},
+      W_No = #{wNo,jdbcType=BIGINT},
+      W_APPROVE = #{wApprove,jdbcType=INTEGER},
+      W_DURATION = #{wDuration,jdbcType=INTEGER},
+      W_DATE = #{wDate,jdbcType=DATE},
+      W_REASON = #{wReason,jdbcType=VARCHAR}
+    where W_Id = #{wId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.DevelopmentMapper" >
+  <resultMap id="BaseResultMap" type="po.Development" >
+    <id column="D_NO" property="dNo" jdbcType="BIGINT" />
+    <result column="D_NAME" property="dName" jdbcType="VARCHAR" />
+    <result column="D_NOTE" property="dNote" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    D_NO, D_NAME, D_NOTE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.DevelopmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from development
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from development
+    where D_NO = #{dNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from development
+    where D_NO = #{dNo,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.DevelopmentExample" >
+    delete from development
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Development" >
+    insert into development (D_NO, D_NAME, D_NOTE
+      )
+    values (#{dNo,jdbcType=BIGINT}, #{dName,jdbcType=VARCHAR}, #{dNote,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="po.Development" >
+    insert into development
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dNo != null" >
+        D_NO,
+      </if>
+      <if test="dName != null" >
+        D_NAME,
+      </if>
+      <if test="dNote != null" >
+        D_NOTE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dNo != null" >
+        #{dNo,jdbcType=BIGINT},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dNote != null" >
+        #{dNote,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.DevelopmentExample" resultType="java.lang.Integer" >
+    select count(*) from development
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update development
+    <set >
+      <if test="record.dNo != null" >
+        D_NO = #{record.dNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.dName != null" >
+        D_NAME = #{record.dName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dNote != null" >
+        D_NOTE = #{record.dNote,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update development
+    set D_NO = #{record.dNo,jdbcType=BIGINT},
+      D_NAME = #{record.dName,jdbcType=VARCHAR},
+      D_NOTE = #{record.dNote,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Development" >
+    update development
+    <set >
+      <if test="dName != null" >
+        D_NAME = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dNote != null" >
+        D_NOTE = #{dNote,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where D_NO = #{dNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Development" >
+    update development
+    set D_NAME = #{dName,jdbcType=VARCHAR},
+      D_NOTE = #{dNote,jdbcType=VARCHAR}
+    where D_NO = #{dNo,jdbcType=BIGINT}
+  </update>
+</mapper>
