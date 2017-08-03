@@ -24,6 +24,7 @@ public class TestController {
     public String findAllEmployee(String name, String city) {
         /**
          * 查找全部员工测试通过
+         * 测试用
          List<Employee>list=employeeService.findAllEmployee();
          for(Employee employee:list){
          System.out.println(employee.geteName()+employee.geteBdate().toString());
